@@ -4151,8 +4151,13 @@ main::after{content:"";display:block;flex:0 0 auto;width:100%;height:var(--padb,
                 </sc-if>
                 <span style="position:relative;display:block;font-size:10.5px;font-weight:800;color:{{ cell.tone }};font-variant-numeric:tabular-nums;line-height:1.1;text-shadow:0 1px 3px rgba(0,0,0,.85);transition:background-color .3s cubic-bezier(.32,.72,0,1),background .3s cubic-bezier(.32,.72,0,1),color .3s cubic-bezier(.32,.72,0,1),border-color .3s cubic-bezier(.32,.72,0,1),box-shadow .3s cubic-bezier(.32,.72,0,1)">{{ cell.n }}</span>
                 <sc-if value="{{ cell.hasCrest }}" hint-placeholder-val="{{ false }}">
-                  <span style="position:absolute;left:0;right:0;top:53%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;pointer-events:none">
-                    <span style="font-size:{{ cell.shortSize }};font-weight:800;letter-spacing:{{ cell.shortSp }};color:rgba(255,255,255,.97);white-space:nowrap;text-shadow:0 1px 3px rgba(3,7,14,.9),0 0 2px rgba(3,7,14,.8)">{{ cell.short }}</span>
+                  <span style="position:absolute;left:0;right:0;top:{{ cell.midTop }};transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;pointer-events:none">
+                    <sc-if value="{{ cell.hasEmb }}" hint-placeholder-val="{{ false }}">
+                      <span role="img" aria-label="{{ cell.crestLabel }}" style="display:block;width:32px;height:25px;background-image:{{ cell.embBg }};background-size:{{ cell.embSize }};background-position:center;background-repeat:no-repeat;filter:drop-shadow(0 1px 1.5px rgba(3,7,14,.75))"></span>
+                    </sc-if>
+                    <sc-if value="{{ cell.noEmb }}" hint-placeholder-val="{{ false }}">
+                      <span style="font-size:{{ cell.shortSize }};font-weight:800;letter-spacing:{{ cell.shortSp }};color:rgba(255,255,255,.97);white-space:nowrap;text-shadow:0 1px 3px rgba(3,7,14,.9),0 0 2px rgba(3,7,14,.8)">{{ cell.short }}</span>
+                    </sc-if>
                     <span style="font-size:10.5px;font-weight:800;letter-spacing:-.04em;color:rgba(255,255,255,.74);font-variant-numeric:tabular-nums;white-space:nowrap;text-shadow:0 1px 3px rgba(3,7,14,.9)">{{ cell.ko }}</span>
                   </span>
                 </sc-if>
@@ -5467,7 +5472,7 @@ class Component extends DCLogic {
     var w=this.state.wall;
     var list=this.filtered(this.matches());
     /* .length だと「◎→○」のような同じ文字数の変更を取りこぼすため、内容そのものを署名にする */
-    var sig=["v136",w.density,w.result,(w.stamp!==false),list.length,this.state.seasonId,this.state.filter,JSON.stringify(this.state.rec)].join("|");
+    var sig=["v137",w.density,w.result,(w.stamp!==false),list.length,this.state.seasonId,this.state.filter,JSON.stringify(this.state.rec)].join("|");
     if(cv.__sig===sig) return;
     cv.__sig=sig;
     var self=this;
@@ -5901,27 +5906,32 @@ class Component extends DCLogic {
         var longest = "";
         list.forEach(function(q){
           var t=(paddingMode==="normal") ? q.opp : (self.CITY_SHORT[q.opp]||q.opp);
-          ctx.font="700 "+nWant+"px "+MIN;
+          ctx.font="800 "+nWant+"px "+GK;
           if(ctx.measureText(t).width > ctx.measureText(longest).width) longest=t;
         });
         /* 省略表示は3文字を基準に揃える。正式表示は最長の名前に合わせる */
         var base = (paddingMode==="normal") ? longest
                  : (longest.length>3 ? longest.slice(0,3)+"　" : longest);
-        self._wallNameSize = self.fitFont(ctx, base, Math.max(20, nRoom), nWant, 14, "700", MIN);
+        /* 長い名前は最大14%の長体で収める前提にし、そのぶん全体の字を大きくする */
+        self._wallNameSize = self.fitFont(ctx, base, Math.max(20, nRoom)/0.86, nWant, 14, "800", GK);
       }
       var nSize = self._wallNameSize;
       /* 収まりきらない場合は右端を基準に置く */
-      ctx.font="700 "+nSize+"px "+MIN;
+      ctx.font="800 "+nSize+"px "+GK;
       var nX = cursor;   /* 左揃え */
+      /* 入りきらない名前だけ横方向に詰める（字の高さは全券で揃ったまま） */
+      var nmW = ctx.measureText(nm).width;
+      var nSq = (nmW > nRoom) ? Math.max(0.6, nRoom/nmW) : 1;
       /* 濃紺の縁取りで背景から浮かせる */
       ctx.shadowColor="rgba(0,0,0,.35)"; ctx.shadowBlur=3; ctx.shadowOffsetY=1;
       ctx.lineJoin="round"; ctx.miterLimit=2;
       ctx.strokeStyle="rgba(10,18,32,.9)";
       ctx.lineWidth=Math.max(2, nSize*0.15);
-      ctx.strokeText(nm, nX, cyy);
+      ctx.translate(nX, cyy); ctx.scale(nSq, 1);
+      ctx.strokeText(nm, 0, 0);
       ctx.shadowBlur=0; ctx.shadowOffsetY=0;
       ctx.fillStyle="#ffffff";
-      ctx.fillText(nm, nX, cyy);
+      ctx.fillText(nm, 0, 0);
       ctx.restore();
 
       /* 右側：スコア／押印（小さく右上） */
@@ -7403,17 +7413,30 @@ class Component extends DCLogic {
         var cell={n:String(d), om:false, tone:tone, hasM:!!m,
           bg: m ? (m.home ? "linear-gradient(165deg,rgba(240,198,74,.62),rgba(212,166,48,.34))" : "linear-gradient(165deg,rgba(96,152,236,.6),rgba(56,104,190,.32))") : "transparent",
           bd: isToday ? "rgba(255,255,255,.9)" : (m ? "rgba(255,255,255,.46)" : "rgba(255,255,255,.3)"),
-          opp:"", hasCrest:false, crestBg:"none", crestLabel:"", short:"", ko:"", shortSize:"13px", shortSp:"-.01em", glyph:"", gcolor:"transparent", onTap:null};
+          opp:"", hasCrest:false, crestBg:"none", crestLabel:"", hasEmb:false, noEmb:false, embBg:"none", embSize:"contain", midTop:"53%", short:"", ko:"", shortSize:"13px", shortSp:"-.01em", glyph:"", gcolor:"transparent", onTap:null};
         if(m){
           var sl=seal(m);
           cell.glyph=sl.g; cell.gcolor=sl.c;
           var ss=self.sealStyle(sl.c); cell.sFill=ss.fill; cell.sRing=ss.ring;
-          var pu=self.prefShapeUrl(self.oppPrefOf(m));
-          if(pu){ cell.hasCrest=true; cell.crestBg="url(\""+pu+"\")"; cell.crestLabel=(self.oppPrefOf(m)||"")+"の形"; cell.short=self.CITY_SHORT[m.opp]||m.opp;
+          /* 相手はエンブレムで示す。画像が無いクラブだけ通称の文字にする */
+          var cu=self.crestUrl(m.opp);
+          cell.hasCrest=true;
+          cell.hasEmb=!!cu; cell.noEmb=!cu;
+          cell.short=self.CITY_SHORT[m.opp]||m.opp;
+          if(cu){
+            cell.embBg="url(\""+cu+"\")";
+            /* 透明余白を除いた見かけの高さを22pxに揃える */
+            cell.embSize=self.crestSizeAt(m.opp, 22);
+            cell.crestLabel=m.opp+"のエンブレム";
+            /* 左上の日付・右上の押印と重ならないよう少し下げる */
+            cell.midTop="58%";
+          } else {
+            cell.crestLabel=m.opp;
             /* 3文字でも2文字と同じ大きさに見えるよう、字送りだけ詰める */
             cell.shortSize = "13px";
             cell.shortSp   = (cell.short.length>=3 ? "-.12em" : "-.02em");
-            cell.ko = m.ko || "未定"; }
+          }
+          cell.ko = m.ko || "未定";
           cell.onTap=(function(id){ return function(){ self.haptic(8); self.setState({calId:id}); }; })(m.id);
         }
         cells.push(cell);
