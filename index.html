@@ -5052,72 +5052,73 @@ class Component extends DCLogic {
     ];
     /* 各PNGの実描画部の高さ比（透明余白を除く）。券内で見かけの高さを揃える */
     this.CREST_FH = {an:.979,co:.979,cs:.958,fi:.792,gt:.729,je:.979,ka:.875,kf:.979,kr:.833,kt:.958,ku:.958,mh:.958,mz:.958,nc:.958,np:.958,oa:.667,os:.917,pa:.979,rs:.958,ry:.958,sg:.833,st:.646,vs:.938,yg:.917,ym:.708};
-    /* 対戦相手のエンブレム（透過PNG） */
+    /* 対戦相手のエンブレム（透過PNG）。置き場所を変える時は CREST_DIR だけ直す */
+    this.CREST_DIR = "img/Emblem/";
     this.CREST = {
-      "北海道コンサドーレ札幌":"crest/cs_l.png",
-      "ヴァンラーレ八戸":"crest/vh_l.png",
-      "ベガルタ仙台":"crest/vs_l.png",
-      "ブラウブリッツ秋田":"crest/ba_l.png",
-      "モンテディオ山形":"crest/my_l.png",
-      "いわきFC":"crest/iw_l.png",
-      "栃木シティ":"crest/tc_l.png",
-      "RB大宮アルディージャ":"crest/oa_l.png",
-      "横浜FC":"crest/yk_l.png",
-      "湘南ベルマーレ":"crest/bm_l.png",
-      "ヴァンフォーレ甲府":"crest/ve_l.png",
-      "アルビレックス新潟":"crest/an_l.png",
-      "カターレ富山":"crest/kt_l.png",
-      "ジュビロ磐田":"crest/ju_l.png",
-      "藤枝MYFC":"crest/fj_l.png",
-      "徳島ヴォルティス":"crest/vo_l.png",
-      "FC今治":"crest/fi_l.png",
-      "サガン鳥栖":"crest/st_l.png",
-      "大分トリニータ":"crest/ot_l.png",
-      "テゲバジャーロ宮崎":"crest/tm_l.png",
-      "FC大阪":"crest/os_l.png",
-      "福島ユナイテッドFC":"crest/fu_l.png",
-      "栃木SC":"crest/ts_l.png",
-      "ザスパ群馬":"crest/pa_l.png",
-      "ザスパクサツ群馬":"crest/pa_l.png",
-      "SC相模原":"crest/sg_l.png",
-      "松本山雅FC":"crest/yg_l.png",
-      "AC長野パルセイロ":"crest/np_l.png",
-      "ツエーゲン金沢":"crest/zk_l.png",
-      "レイラック滋賀FC":"crest/rs_l.png",
-      "FC岐阜":"crest/fg_l.png",
-      "奈良クラブ":"crest/nc_l.png",
-      "ガイナーレ鳥取":"crest/gt_l.png",
-      "レノファ山口FC":"crest/ry_l.png",
-      "カマタマーレ讃岐":"crest/km_l.png",
-      "愛媛FC":"crest/eh_l.png",
-      "高知ユナイテッドSC":"crest/kc_l.png",
-      "ギラヴァンツ北九州":"crest/gv_l.png",
-      "ロアッソ熊本":"crest/rk_l.png",
-      "鹿児島ユナイテッドFC":"crest/ku_l.png",
-      "FC琉球":"crest/fr_l.png",
-      "横浜F・マリノス":"crest/ym_l.png",
-      "横浜Fマリノス":"crest/ym_l.png",
-      "鹿島アントラーズ":"crest/ka_l.png",
-      "水戸ホーリーホック":"crest/mh_l.png",
-      "浦和レッズ":"crest/ur_l.png",
-      "ジェフユナイテッド千葉":"crest/je_l.png",
-      "柏レイソル":"crest/kr_l.png",
-      "FC東京":"crest/to_l.png",
-      "東京ヴェルディ":"crest/vn_l.png",
-      "FC町田ゼルビア":"crest/mz_l.png",
-      "川崎フロンターレ":"crest/kf_l.png",
-      "V・ファーレン長崎":"crest/vv_l.png",
-      "Vファーレン長崎":"crest/vv_l.png",
-      "清水エスパルス":"crest/ss_l.png",
-      "名古屋グランパス":"crest/ng_l.png",
-      "京都サンガF.C.":"crest/ks_l.png",
-      "京都サンガ":"crest/ks_l.png",
-      "ガンバ大阪":"crest/go_l.png",
-      "セレッソ大阪":"crest/co_l.png",
-      "ヴィッセル神戸":"crest/vi_l.png",
-      "ファジアーノ岡山":"crest/fo_l.png",
-      "サンフレッチェ広島":"crest/sh_l.png",
-      "アビスパ福岡":"crest/af_l.png"
+      "北海道コンサドーレ札幌":"cs_l.png",
+      "ヴァンラーレ八戸":"vh_l.png",
+      "ベガルタ仙台":"vs_l.png",
+      "ブラウブリッツ秋田":"ba_l.png",
+      "モンテディオ山形":"my_l.png",
+      "いわきFC":"iw_l.png",
+      "栃木シティ":"tc_l.png",
+      "RB大宮アルディージャ":"oa_l.png",
+      "横浜FC":"yk_l.png",
+      "湘南ベルマーレ":"bm_l.png",
+      "ヴァンフォーレ甲府":"ve_l.png",
+      "アルビレックス新潟":"an_l.png",
+      "カターレ富山":"kt_l.png",
+      "ジュビロ磐田":"ju_l.png",
+      "藤枝MYFC":"fj_l.png",
+      "徳島ヴォルティス":"vo_l.png",
+      "FC今治":"fi_l.png",
+      "サガン鳥栖":"st_l.png",
+      "大分トリニータ":"ot_l.png",
+      "テゲバジャーロ宮崎":"tm_l.png",
+      "FC大阪":"os_l.png",
+      "福島ユナイテッドFC":"fu_l.png",
+      "栃木SC":"ts_l.png",
+      "ザスパ群馬":"pa_l.png",
+      "ザスパクサツ群馬":"pa_l.png",
+      "SC相模原":"sg_l.png",
+      "松本山雅FC":"yg_l.png",
+      "AC長野パルセイロ":"np_l.png",
+      "ツエーゲン金沢":"zk_l.png",
+      "レイラック滋賀FC":"rs_l.png",
+      "FC岐阜":"fg_l.png",
+      "奈良クラブ":"nc_l.png",
+      "ガイナーレ鳥取":"gt_l.png",
+      "レノファ山口FC":"ry_l.png",
+      "カマタマーレ讃岐":"km_l.png",
+      "愛媛FC":"eh_l.png",
+      "高知ユナイテッドSC":"kc_l.png",
+      "ギラヴァンツ北九州":"gv_l.png",
+      "ロアッソ熊本":"rk_l.png",
+      "鹿児島ユナイテッドFC":"ku_l.png",
+      "FC琉球":"fr_l.png",
+      "横浜F・マリノス":"ym_l.png",
+      "横浜Fマリノス":"ym_l.png",
+      "鹿島アントラーズ":"ka_l.png",
+      "水戸ホーリーホック":"mh_l.png",
+      "浦和レッズ":"ur_l.png",
+      "ジェフユナイテッド千葉":"je_l.png",
+      "柏レイソル":"kr_l.png",
+      "FC東京":"to_l.png",
+      "東京ヴェルディ":"vn_l.png",
+      "FC町田ゼルビア":"mz_l.png",
+      "川崎フロンターレ":"kf_l.png",
+      "V・ファーレン長崎":"vv_l.png",
+      "Vファーレン長崎":"vv_l.png",
+      "清水エスパルス":"ss_l.png",
+      "名古屋グランパス":"ng_l.png",
+      "京都サンガF.C.":"ks_l.png",
+      "京都サンガ":"ks_l.png",
+      "ガンバ大阪":"go_l.png",
+      "セレッソ大阪":"co_l.png",
+      "ヴィッセル神戸":"vi_l.png",
+      "ファジアーノ岡山":"fo_l.png",
+      "サンフレッチェ広島":"sh_l.png",
+      "アビスパ福岡":"af_l.png"
     };
     this.ORDER = ["◎","○","△","×"];
     this.STATUS_LABEL = {"◎":"参戦済み","○":"参戦予定","△":"検討中","×":"非参戦"};
@@ -5339,6 +5340,7 @@ class Component extends DCLogic {
     if(this.props.demoFill){ this._demoOn=true; this.setState({rec:this.demoRec()}); }
     this.runCount(1800);
     this.paintMaps();
+    this.probeCrests();
     var hash = String(location.hash||"") + String(location.search||"");
     /* 再設定リンクは形が2通りある。どちらでも受け取る
        ・#access_token=…&type=recovery
@@ -5465,7 +5467,7 @@ class Component extends DCLogic {
     var w=this.state.wall;
     var list=this.filtered(this.matches());
     /* .length だと「◎→○」のような同じ文字数の変更を取りこぼすため、内容そのものを署名にする */
-    var sig=["v135",w.density,w.result,(w.stamp!==false),list.length,this.state.seasonId,this.state.filter,JSON.stringify(this.state.rec)].join("|");
+    var sig=["v136",w.density,w.result,(w.stamp!==false),list.length,this.state.seasonId,this.state.filter,JSON.stringify(this.state.rec)].join("|");
     if(cv.__sig===sig) return;
     cv.__sig=sig;
     var self=this;
@@ -5513,7 +5515,7 @@ class Component extends DCLogic {
     if(!this._crestCache) this._crestCache={};
     var need=[], seen={};
     list.forEach(function(m){
-      var src=self.CREST[m.opp];
+      var src=self.crestUrl(m.opp);
       if(!src || seen[m.opp] || self._crestCache[m.opp]) return;
       seen[m.opp]=1; need.push({name:m.opp, src:src});
     });
@@ -5866,8 +5868,25 @@ class Component extends DCLogic {
 
       var cursor=plX+plW+2;
 
-      /* エンブレムは使わない。空いた幅はチーム名に回す */
-      cursor += 6;
+      /* 相手エンブレム。1枚でも読めていれば全券で同じ幅を確保し、チーム名の起点を揃える */
+      if(crestMap && Object.keys(crestMap).length){
+        var eBox = Math.round(Math.min(plH*0.92, hh*0.8));
+        var eIm = crestMap[m.opp];
+        if(eIm && eIm.naturalWidth){
+          var eKey = String(self.CREST[m.opp]||"").split("/").pop().replace("_l.png","");
+          var eFh = self.CREST_FH[eKey] || 1;
+          /* 透明余白を除いた見かけの高さを揃える */
+          var eh = eBox*0.9/eFh, ew = eh*(eIm.naturalWidth/eIm.naturalHeight);
+          if(ew > eBox*1.15){ var eSc = eBox*1.15/ew; ew *= eSc; eh *= eSc; }
+          ctx.save();
+          ctx.shadowColor="rgba(0,0,0,.45)"; ctx.shadowBlur=4; ctx.shadowOffsetY=1;
+          ctx.drawImage(eIm, cursor+6+(eBox-ew)/2, cyy-eh/2, ew, eh);
+          ctx.restore();
+        }
+        cursor += 6 + eBox + 7;
+      } else {
+        cursor += 6;
+      }
 
       ctx.save();
       ctx.textAlign="left"; ctx.textBaseline="middle";
@@ -7073,6 +7092,41 @@ class Component extends DCLogic {
     var fh = this.CREST_FH[k] || 1;
     return "auto " + (58 / fh).toFixed(1) + "px";
   }
+  /* 相手エンブレムのURL。読み込めなかったクラブは "" を返す */
+  crestUrl(opp){
+    var f = this.CREST[opp];
+    if(!f || (this._crestBad && this._crestBad[opp])) return "";
+    return this.CREST_DIR + f;
+  }
+  /* 券やパネルに敷く絵柄：エンブレム優先。無い時だけ相手本拠地の県の形 */
+  crestFor(m){
+    var cu = this.crestUrl(m.opp);
+    if(cu) return {has:true, bg:"url(\""+cu+"\")", label:m.opp+"のエンブレム", size:this.crestSize(m.opp)};
+    var pref = this.oppPrefOf(m), pu = this.prefShapeUrl(pref);
+    return {has:!!pu, bg:pu ? ("url(\""+pu+"\")") : "none", label:(pref||"")+"の形", size:"contain"};
+  }
+  /* 起動時に一度だけ到達確認。404 のクラブは県の形に差し戻して描き直す */
+  probeCrests(){
+    if(this._crestProbed) return;
+    this._crestProbed = true;
+    if(!this._crestBad) this._crestBad = {};
+    var self = this, seen = {}, jobs = [];
+    this.SEASONS.forEach(function(s){
+      (s.raw||[]).forEach(function(m){
+        if(seen[m.opp] || !self.CREST[m.opp]) return;
+        seen[m.opp] = 1;
+        jobs.push(new Promise(function(res){
+          var im = new Image();
+          im.onload = function(){ res(); };
+          im.onerror = function(){ self._crestBad[m.opp] = true; res(); };
+          im.src = self.CREST_DIR + self.CREST[m.opp];
+        }));
+      });
+    });
+    Promise.all(jobs).then(function(){
+      if(Object.keys(self._crestBad).length) self.setState({crestRev:(self.state.crestRev||0)+1});
+    });
+  }
 
   /* ══ 集計の土台 ══ */
   scopedPairs(scope){
@@ -7374,6 +7428,7 @@ class Component extends DCLogic {
         var r=rec[m.id]||{}, sl=seal(m);
         var tl=this.tList(r);
         var oc=this.outcome(m);
+        var cf=this.crestFor(m);
         cd={
           comp:"参戦チケット　"+m.comp+(m.comp==="J2"?(" 第"+parseInt(m.round,10)+"節"):(" "+m.round)),
           opp:m.opp, ha:m.home?"HOME":"AWAY",
@@ -7387,9 +7442,9 @@ class Component extends DCLogic {
             : "linear-gradient(180deg,rgba(91,155,240,.34),rgba(56,104,190,.16))",
           goBd: m.home ? "rgba(240,198,74,.42)" : "rgba(146,190,255,.5)",
           goFg: m.home ? "#ffe9ac" : "#d6e8ff",
-          hasCrest: !!this.prefShapeUrl(this.oppPrefOf(m)),
-          crestBg: this.prefShapeUrl(this.oppPrefOf(m)) ? ("url(\""+this.prefShapeUrl(this.oppPrefOf(m))+"\")") : "none",
-          crestLabel: (this.oppPrefOf(m)||"")+"の形",
+          hasCrest: cf.has,
+          crestBg: cf.bg,
+          crestLabel: cf.label,
           when:m.date+"（"+m.dow+"） "+m.ko,
           venue:m.venue,
           result: oc ? ({win:"○",draw:"△",lose:"●"}[oc]+" "+m.result.gf+"-"+m.result.ga+(m.result.pk?("（PK "+m.result.pk.gf+"-"+m.result.pk.ga+"）"):"")) : "",
@@ -8130,6 +8185,7 @@ class Component extends DCLogic {
 
       var compLabel = m.comp==="J2" ? ("J2 第"+parseInt(m.round,10)+"節")
         : (m.comp==="百年構想" ? m.round : m.comp+(m.round?" "+m.round:""));
+      var cf = self.crestFor(m);
 
       return {
         id: m.id,
@@ -8138,11 +8194,11 @@ class Component extends DCLogic {
         dow: String(m.dow).split("・")[0] + "曜日",
         ko: m.ko,
         opp: m.opp,
-        /* クラブのエンブレムに代えて、開催地の都道府県の形を敷く */
-        hasCrest: !!self.prefShapeUrl(self.oppPrefOf(m)),
-        crestBg: self.prefShapeUrl(self.oppPrefOf(m)) ? ("url(\""+self.prefShapeUrl(self.oppPrefOf(m))+"\")") : "none",
-        crestLabel: (self.oppPrefOf(m)||"") + "の形",
-        crestSize: "contain",
+        /* 相手クラブのエンブレムを敷く（画像が無い時だけ本拠地の県の形） */
+        hasCrest: cf.has,
+        crestBg: cf.bg,
+        crestLabel: cf.label,
+        crestSize: cf.size,
         venue: m.venue,
         ha: m.home ? "HOME" : "AWAY",
         haC: m.home ? "#f0c64a" : "#a8c8f0",
